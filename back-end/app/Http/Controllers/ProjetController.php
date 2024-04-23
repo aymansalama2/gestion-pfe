@@ -51,16 +51,18 @@ class ProjetController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        try {
-            $projet = Projet::findOrFail($id);
-            $projet->delete();
-            return response()->json(['message' => 'Le projet a été supprimé avec succès.']);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Erreur lors de la suppression du projet.', 'error' => $e->getMessage()], 500);
-        }
+  // ProjetController.php
+
+public function destroy($id)
+{
+    try {
+        $projet = Projet::findOrFail($id);
+        $projet->delete();
+        return response()->json(['message' => 'Le projet a été supprimé avec succès.']);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Erreur lors de la suppression du projet.', 'error' => $e->getMessage()], 500);
     }
+}
 
     public function show($id)
     {

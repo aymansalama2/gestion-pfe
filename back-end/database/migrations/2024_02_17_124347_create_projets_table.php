@@ -24,6 +24,8 @@ class CreateProjetsTable extends Migration
             $table->text('exigences_specifiques')->nullable();
             $table->text('exemples_sites_web')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->boolean('valide')->default(false); // Ajout de la colonne 'valide' avec la valeur par défaut 'false'
+
             $table->timestamps();
         });
     }

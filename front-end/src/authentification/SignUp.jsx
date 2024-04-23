@@ -54,8 +54,8 @@ export default function SignUp() {
   };
 
   return (
-    <section className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8 bg-white rounded-lg shadow p-6 ">
+    <section className="bg- min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full space-y-8 bg-whit-300 rounded-lg shadow p-6 ">
 
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 text-center">
           Create an account

@@ -22,6 +22,16 @@ console.log(projectId)
       console.error('Erreur lors de la récupération des données des projets:', error);
     }
   };
+  const handleDeleteProject = async (projectId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/projets/${projectId}`);
+      // Mettre à jour la liste des projets après la suppression
+      const updatedProjects = projects.filter(project => project.id !== projectId);
+      setProjects(updatedProjects);
+    } catch (error) {
+      console.error('Erreur lors de la suppression du projet:', error);
+    }
+  };
 
   const fetchUsersData = async () => {
     try {
@@ -47,21 +57,7 @@ console.log(projectId)
       console.error('Erreur lors de la récupération des tâches:', error);
     }
   };
-  const showProjectDetails = (project) => {
-    const detailsMessage = `
-      Exemples Sites Web: ${project.exemples_sites_web}
-      Exigences Spécifiques: ${project.exigences_specifiques}
-      Délai de Livraison: ${project.delai_livraison}
-      Budget Alloué: ${project.budget_alloue}
-      Fonctionnalités Requises: ${project.fonctionnalites_requises}
-      Préférences de Conception: ${project.preferences_conception}
-      Technologies Souhaitées: ${project.technologies_souhaitees}
-      Description du Projet: ${project.description_projet}
-      User ID: ${project.user_id}
-      Titre du Projet: ${project.titre_projet}
-    `;
-    alert(detailsMessage);
-  };
+  
   
   
 
@@ -115,6 +111,56 @@ console.log(projectId)
             </table>
           </div>
         );
+        case "détails":
+        const showProjectDetails = (project) => {
+          const detailsMessage = `
+            Exemples Sites Web: ${project.exemples_sites_web}
+            Exigences Spécifiques: ${project.exigences_specifiques}
+            Délai de Livraison: ${project.delai_livraison}
+            Budget Alloué: ${project.budget_alloue}
+            Fonctionnalités Requises: ${project.fonctionnalites_requises}
+            Préférences de Conception: ${project.preferences_conception}
+            Technologies Souhaitées: ${project.technologies_souhaitees}
+            Description du Projet: ${project.description_projet}
+            User ID: ${project.user_id}
+            Titre du Projet: ${project.titre_projet}
+          `;
+          // console.log(detailsMessage);
+        };
+
+        // const handleClickDetails = (project) => {
+        //   showProjectDetails(project);
+        // };
+
+        return (
+          <div>
+          <h1 className="text-3xl font-bold mb-8">Détails du projet</h1>
+          {projects.map((project) => (
+            <div key={project.id} className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+              <div className="p-6">
+                <h2 className="text-2xl font-semibold mb-4">{project.titre_projet}</h2>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-gray-600 mb-2"><strong>Exemples Sites Web:</strong> {project.exemples_sites_web}</p>
+                    <p className="text-gray-600 mb-2"><strong>Exigences Spécifiques:</strong> {project.exigences_specifiques}</p>
+                    <p className="text-gray-600 mb-2"><strong>Délai de Livraison:</strong> {project.delai_livraison}</p>
+                    <p className="text-gray-600 mb-2"><strong>Budget Alloué:</strong> {project.budget_alloue}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-600 mb-2"><strong>Fonctionnalités Requises:</strong> {project.fonctionnalites_requises}</p>
+                    <p className="text-gray-600 mb-2"><strong>Préférences de Conception:</strong> {project.preferences_conception}</p>
+                    <p className="text-gray-600 mb-2"><strong>Technologies Souhaitées:</strong> {project.technologies_souhaitees}</p>
+                    <p className="text-gray-600 mb-2"><strong>User ID:</strong> {project.user_id}</p>
+                  </div>
+                </div>
+                <p className="text-gray-700 mb-2"><strong>Description du Projet:</strong> {project.description_projet}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        );
+
       case 'employees':
         return (
           <div>
@@ -178,40 +224,44 @@ console.log(projectId)
         default:
           return (
             <div>
-              <h1 className="text-3xl font-bold mb-8">Liste des projets</h1>
-              <table className="min-w-full bg-white">
-                <thead>
-                  <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-6 text-left">Titre du projet</th>
-                    <th className="py-3 px-6 text-left">Nom de l'utilisateur</th>
-                    <th className="py-3 px-6 text-left">id de l'utilisateur</th>
-                    <th className="py-3 px-6 text-left">Actions</th>
-                    <th className="py-3 px-6 text-left">Actions</th>
-                    <th className="py-3 px-6 text-left">Actions</th>
+            <h1 className="text-3xl font-bold mb-8">Liste des projets</h1>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4" onClick={() => setSelectedTab('détails')}>
+  Voir les détails des projets
+</button>
 
+
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Titre du projet</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom de l'utilisateur</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID de l'utilisateur</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-600 text-sm font-light">
+                <tbody className="bg-white divide-y divide-gray-200 text-sm">
                   {projects.map((project) => (
-                    <tr key={project.id} className="border-b border-gray-200 hover:bg-gray-100">
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{project.titre_projet}</td>
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{getUserById(project.user_id)}</td>
-                      <td className="py-3 px-6 text-left whitespace-nowrap">{project.user_id}</td>
-
-                      <td className="py-3 px-6 text-left">
-                        <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded" onClick={handleLogout}>Supprimer</button>
+                    <tr key={project.id} className="hover:bg-gray-100">
+                      <td className="px-6 py-4 whitespace-nowrap">{project.titre_projet}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{getUserById(project.user_id)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{project.user_id}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 whitespace-nowrap">
+            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 rounded transition duration-300 ease-in-out transform hover:scale-105" onClick={() => handleDeleteProject(project.id)}>Supprimer</button>
+          </td>
                       </td>
-                      <td className="py-3 px-6 text-left">
-                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" onClick={() => showProjectDetails(project)}>Détails</button>
-                                      </td>
-                      <td className="py-3 px-6 text-left">
-                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded" onClick={() => navigate(`/gestion_des_taches/${project.id}`)}>Tâches</button>
-             </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:scale-105" onClick={() => navigate(`/gestion_des_taches/${project.id}`)}>Tâches</button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
+          </div>
+          
           );
         
     }

@@ -52,7 +52,7 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 min-h-screen flex items-center justify-center">
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full mx-auto p-8 rounded-lg bg-white shadow-lg">
         <div className="flex justify-center mb-4">
           <img src={AvatarIcon} alt="Avatar" className="h-24 animate-salut animate-bounce" />
@@ -86,14 +86,9 @@ export default function Login() {
               className="appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                Remember me
-              </label>
-            </div>
-            <NavLink to={"/ChangePasswordForm"}  className="text-blue-600 hover:text-blue-500 text-sm">Forgot your password?</NavLink>
+          <div className="flex items-center justify-between mb-5">
+           
+            <NavLink to={"/signup"}  className="text-blue-600  items-center hover:text-blue-500 text-sm">Vous n'avez pas de compte ? Inscrivez-vous</NavLink>
 
           </div>
           <button
